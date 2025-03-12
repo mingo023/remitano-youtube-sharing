@@ -2,8 +2,7 @@ import { ReactNode, useEffect } from "react";
 import { Home } from "lucide-react";
 
 const isUserAuthenticated = (): boolean => {
-  // Replace this check with your actual authentication logic
-  return !!localStorage.getItem("auth_token");
+  return !!localStorage.getItem("accessToken");
 };
 
 const Layout = ({ children }: { children: ReactNode }) => {
