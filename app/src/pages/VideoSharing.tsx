@@ -1,4 +1,4 @@
-const FunnyMovies = () => {
+const VideoSharing = () => {
   return (
     <div className="flex flex-col bg-background text-foreground">
       {/* Website content */}
@@ -32,4 +32,4 @@ const FunnyMovies = () => {
   );
 };
 
-export default FunnyMovies;
+export default VideoSharing;

@@ -3,6 +3,7 @@ import "./App.css";
 import VideoShare from "./pages/VideoShare";
 import Layout from "./components/Layout";
 import LoginPage from "./pages/Login";
+import VideoListing from "./pages/VideoListing";
 
 function App() {
   return (
@@ -10,10 +11,18 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/"
+            path="/share"
             element={
               <Layout>
                 <VideoShare />
+              </Layout>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <Layout>
+                <VideoListing />
               </Layout>
             }
           />

@@ -1,7 +1,18 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { Home } from "lucide-react";
 
+const isUserAuthenticated = (): boolean => {
+  // Replace this check with your actual authentication logic
+  return !!localStorage.getItem("auth_token");
+};
+
 const Layout = ({ children }: { children: ReactNode }) => {
+  useEffect(() => {
+    if (!isUserAuthenticated()) {
+      window.location.href = "/login";
+    }
+  }, []);
+
   return (
     <div>
       {/* Header */}
