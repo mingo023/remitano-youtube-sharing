@@ -13,6 +13,7 @@ export const dataSourceOptions: DataSourceOptions = {
   multipleStatements: true,
   logging: false,
   dropSchema: envConfig.IS_TEST,
+  ssl: envConfig.IS_TEST ? false : { rejectUnauthorized: false },
   entities: [
     `${envConfig.ROOT_PATH}/domains/**/*.entity.${envConfig.IS_TEST ? 'ts' : 'js'}`,
   ],
