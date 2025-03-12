@@ -7,8 +7,8 @@ interface MovieCardProps {
   title: string;
   sharedBy: string;
   description: string;
-  upvotes: number;
-  downvotes: number;
+  likes: number;
+  dislikes: number;
   url: string;
   initialVoteStatus?: VoteStatus;
 }
@@ -24,14 +24,21 @@ export default function MovieCard({
   title,
   sharedBy,
   description,
-  upvotes,
-  downvotes,
+  likes: upvotes,
+  dislikes: downvotes,
   url,
   initialVoteStatus = "none",
 }: MovieCardProps) {
   const [voteStatus, setVoteStatus] = useState<VoteStatus>(initialVoteStatus);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showThumbnail, setShowThumbnail] = useState(true);
+
+  // State for toggling "read more" for title and description
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+
+  // Adjust these thresholds as needed
+  const shouldTruncateDescription = description.length > 100;
+
   const videoId = extractYoutubeId(url);
 
   const handleVote = (vote: VoteStatus) => {
@@ -42,14 +49,6 @@ export default function MovieCard({
     setIsPlaying(true);
     setShowThumbnail(false);
   };
-
-  // Vote status text for accessibility and UI
-  const voteStatusText =
-    voteStatus === "none"
-      ? "(un-voted)"
-      : voteStatus === "up"
-        ? "(voted up)"
-        : "(voted down)";
 
   return (
     <div className="flex flex-col md:flex-row gap-6 p-4 border rounded-lg bg-card">
@@ -98,7 +97,9 @@ export default function MovieCard({
       <div className="flex-1 space-y-4">
         <div className="flex items-start justify-between">
           <div>
-            <h3 className="text-lg font-medium text-red-500">{title}</h3>
+            <div>
+              <h3 className={`text-lg font-medium text-red-500`}>{title}</h3>
+            </div>
             <p className="text-sm text-muted-foreground">
               Shared by: {sharedBy}
             </p>
@@ -114,9 +115,6 @@ export default function MovieCard({
 
           {/* Voting Buttons */}
           <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground mr-1">
-              {voteStatusText}
-            </span>
             <button
               onClick={() => handleVote("up")}
               className={`p-2 rounded-full transition-colors ${
@@ -146,7 +144,19 @@ export default function MovieCard({
 
         <div>
           <h4 className="text-sm font-medium mb-2">Description:</h4>
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p
+            className={`text-sm text-muted-foreground ${!isDescriptionExpanded ? "line-clamp-2" : ""}`}
+          >
+            {description}
+          </p>
+          {shouldTruncateDescription && (
+            <button
+              onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
+              className="text-sm text-blue-500"
+            >
+              {isDescriptionExpanded ? "Read less" : "Read more"}
+            </button>
+          )}
         </div>
       </div>
     </div>

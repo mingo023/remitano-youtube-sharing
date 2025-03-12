@@ -1,11 +1,12 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
-import VideoSharing from "./pages/VideoSharing";
 import Layout from "./components/Layout";
-import LoginPage from "./pages/Login";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import VideoListing from "./pages/VideoListing";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import VideoSharing from "./pages/VideoSharing";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +32,10 @@ function App() {
                 </Layout>
               }
             />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="*" element={<Navigate to="/" />} />
+
           </Routes>
         </BrowserRouter>
         <ToastContainer />

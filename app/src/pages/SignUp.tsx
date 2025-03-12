@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Lock, User } from "lucide-react";
-import { login } from "../api/auth";
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import { Lock, User } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { signUp } from "../api/auth";
 import { UserAuthentication } from "../types/auth";
 
-export default function LoginPage() {
+export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -18,8 +18,8 @@ export default function LoginPage() {
     }
   }, [navigate]);
 
-  const loginMutation = useMutation({
-    mutationFn: login,
+  const signUpMutation = useMutation({
+    mutationFn: signUp,
     onSuccess: (response: UserAuthentication) => {
       localStorage.setItem("accessToken", response.accessToken);
       localStorage.setItem("user", JSON.stringify(response.user));
@@ -56,7 +56,7 @@ export default function LoginPage() {
       return;
     }
 
-    await loginMutation.mutateAsync({
+    await signUpMutation.mutateAsync({
       email,
       password,
     });
@@ -66,9 +66,9 @@ export default function LoginPage() {
     <div className="flex min-h-screen bg-background">
       <div className="flex flex-col justify-center w-full max-w-md mx-auto px-4 py-8">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Sign Up</h1>
           <p className="text-sm text-muted-foreground mt-2 text-black">
-            Enter your credentials to access your account
+            Enter your email and password to create an account
           </p>
         </div>
 
@@ -94,9 +94,7 @@ export default function LoginPage() {
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 pl-9 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </div>
-              {emailError && (
-                <p className="text-sm text-red-600">{emailError}</p>
-              )}
+              {emailError && <p className="text-sm text-red-600">{emailError}</p>}
             </div>
 
             <div className="space-y-2 flex flex-col">
@@ -119,18 +117,22 @@ export default function LoginPage() {
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 pl-9 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </div>
-              {passwordError && (
-                <p className="text-sm text-red-600">{passwordError}</p>
-              )}
+              {passwordError && <p className="text-sm text-red-600">{passwordError}</p>}
             </div>
 
             <button
               type="submit"
               className="border border-black inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
             >
-              Sign in
+              Sign up
             </button>
           </form>
+          <p className="mt-4 text-center text-sm text-black">
+            Don't have an account?{" "}
+            <Link to="/sign-in" className="text-primary hover:underline">
+              Sign in
+            </Link>
+          </p>
         </div>
       </div>
     </div>

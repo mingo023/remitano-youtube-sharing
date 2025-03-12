@@ -29,7 +29,7 @@ export default function httpRequest<T>(
 ): Promise<T> {
   if (!instance) {
     instance = axios.create({
-      baseURL: import.meta.env.VITE_API_KEY || "http://localhost:3000",
+      baseURL: import.meta.env.VITE_API_URL as string,
       headers,
     });
 
