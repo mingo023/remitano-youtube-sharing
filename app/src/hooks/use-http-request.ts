@@ -48,6 +48,11 @@ const handleResponseSuccess = (response: AxiosResponse) => {
 };
 
 const handleResponseError = (error: AxiosError) => {
+  if (error.status === 401) {
+    localStorage.removeItem("accessToken");
+    window.location.reload();
+  }
+
   toast.error((error.response?.data as any).message || "An error occurred");
   throw error;
 };

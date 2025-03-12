@@ -12,9 +12,13 @@ export const envConfig = {
     USER: process.env.DATABASE_USER,
     PASSWORD: process.env.DATABASE_PASSWORD,
     NAME: process.env.DATABASE_NAME,
+    SSL: process.env.DATABASE_SSL === 'true',
   },
   JWT: {
     SECRET: process.env.JWT_SECRET || 'secret',
     EXPIRES_IN: process.env.JWT_EXPIRES_IN || '1d',
+  },
+  YOUTUBE: {
+    API_KEY: process.env.YOUTUBE_API_KEY,
   },
 };
