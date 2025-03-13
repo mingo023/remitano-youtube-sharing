@@ -17,6 +17,7 @@ import { SocketService } from '~sockets/services/socket.service';
   cors: {
     origin: '*',
   },
+  transports: ['websocket'],
 })
 export class SocketGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
