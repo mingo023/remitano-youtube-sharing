@@ -61,6 +61,8 @@ YOUTUBE_API_KEY=
 ## Testing
 
 ### Backend Tests
+#### Ensure to create a test database before running tests, the test database should be postfixed with `-test`.
+
 ```bash
 cd api
 npm run test:e2e    # E2E tests

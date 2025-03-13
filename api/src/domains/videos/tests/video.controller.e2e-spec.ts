@@ -1,5 +1,6 @@
 import { TestHelper } from '~shared/helpers/test.helper';
 import { VideoRepository } from '../repositories/video.repository';
+import { VideoFetchService } from '../services/video-fetch.service';
 
 describe('VideoController', () => {
   const testHelper = new TestHelper();
@@ -42,6 +43,19 @@ describe('VideoController', () => {
   });
 
   it('should create video entity when request is valid', async () => {
+    const videoFetchService =
+      await testHelper.getService<VideoFetchService>(VideoFetchService);
+    const getVideoInfoMock = jest
+      .spyOn(videoFetchService, 'getVideoInfo')
+      .mockImplementation(async () => {
+        return {
+          title: 'Test Video',
+          description: 'Test Description',
+          likes: 100,
+          dislikes: 1,
+        };
+      });
+
     const response = await testHelper
       .post('/videos')
       .set('Authorization', `Bearer ${accessToken}`)
@@ -62,18 +76,20 @@ describe('VideoController', () => {
       id: expect.any(String),
       sharedById: expect.any(String),
       url: expect.any(String),
-      title: expect.any(String),
-      description: expect.any(String),
-      likes: 0,
-      dislikes: 0,
+      title: 'Test Video',
+      description: 'Test Description',
+      likes: 100,
+      dislikes: 1,
       createdAt: expect.any(Date),
       updatedAt: expect.any(Date),
     }).toEqual(video);
+
+    getVideoInfoMock.mockRestore();
   });
 
   it('should return list of videos', async () => {
     const response = await testHelper
-      .get('/videos')
+      .get('/videos?limit=10&page=1')
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.status).toBe(200);
@@ -83,8 +99,14 @@ describe('VideoController', () => {
       url: expect.any(String),
       title: expect.any(String),
       description: expect.any(String),
-      likes: 0,
-      dislikes: 0,
+      likes: expect.any(Number),
+      dislikes: expect.any(Number),
+      sharedBy: {
+        id: expect.any(String),
+        email: expect.any(String),
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
+      },
       createdAt: expect.any(String),
       updatedAt: expect.any(String),
     }).toEqual(response.body.videos[0]);
