@@ -7,7 +7,7 @@ export class UserEntity extends BaseEntity {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @OneToMany(() => VideoEntity, (video) => video.sharedBy)
