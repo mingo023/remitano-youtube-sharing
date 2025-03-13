@@ -79,7 +79,7 @@ export default function SignUp() {
                 htmlFor="email"
                 className="text-black text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 self-start"
               >
-                email
+                Email
               </label>
               <div className="relative">
                 <div className="absolute left-3 top-3 text-muted-foreground">
