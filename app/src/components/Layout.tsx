@@ -11,7 +11,7 @@ const isUserAuthenticated = (): boolean => {
 const Layout = ({ children }: { children: ReactNode }) => {
   const currentUser = useCurrentUser();
   const navigate = useNavigate();
-  const { connect, disconnect } = useSocket();
+  const { connect } = useSocket();
 
   useEffect(() => {
     if (!isUserAuthenticated()) {
@@ -22,11 +22,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       userId: currentUser?.id,
       token: localStorage.getItem("accessToken"),
     });
-
-    return () => {
-      disconnect();
-    }
-  }, [connect, disconnect, currentUser?.id]);
+  }, [connect, currentUser?.id]);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
