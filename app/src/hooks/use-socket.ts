@@ -20,7 +20,8 @@ export default function useSocket() {
     });
 
     socket.once(SocketEvents.NEW_VIDEO, (data) => {
-      if (data.sharedById === config.userId) {
+      const user = JSON.parse(localStorage.getItem("user") ?? "{}");
+      if (data.sharedById === user?.id) {
         return;
       }
       toast.success(`New video shared titled: ${data.title}`);
