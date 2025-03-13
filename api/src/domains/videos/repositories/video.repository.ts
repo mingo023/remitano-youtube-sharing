@@ -11,7 +11,6 @@ export class VideoRepository extends Repository<VideoEntity> {
   async paginateVideos(userId: string, limit: number, page: number) {
     const [videos, total] = await Promise.all([
       this.find({
-        where: { sharedById: userId },
         relations: {
           sharedBy: true,
         },
