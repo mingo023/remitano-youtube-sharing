@@ -6,6 +6,7 @@ import { dataSourceOptions } from './configs/database.config';
 import { UserModule } from './domains/users/user.module';
 import { AuthModule } from './domains/auth/auth.module';
 import { VideoModule } from '~domains/videos/video.module';
+import { SocketModule } from '~sockets/socket.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { VideoModule } from '~domains/videos/video.module';
     UserModule,
     AuthModule,
     VideoModule,
+    SocketModule,
   ],
   controllers: [AppController],
   providers: [AppService],

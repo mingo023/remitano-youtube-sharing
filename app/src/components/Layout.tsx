@@ -1,6 +1,8 @@
 import { ReactNode, useEffect } from "react";
 import { Home } from "lucide-react";
 import useCurrentUser from "../hooks/current-user";
+import { useNavigate } from "react-router-dom";
+import useSocket from "../hooks/use-socket";
 
 const isUserAuthenticated = (): boolean => {
   return !!localStorage.getItem("accessToken");
@@ -8,21 +10,32 @@ const isUserAuthenticated = (): boolean => {
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const currentUser = useCurrentUser();
+  const navigate = useNavigate();
+  const { connect, disconnect } = useSocket();
 
   useEffect(() => {
     if (!isUserAuthenticated()) {
       window.location.href = "/sign-in";
     }
-  }, []);
+
+    connect({
+      userId: currentUser?.id,
+      token: localStorage.getItem("accessToken"),
+    });
+
+    return () => {
+      disconnect();
+    }
+  }, [connect, disconnect, currentUser?.id]);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
-    window.location.href = "/sign-in";
+    navigate("/sign-in");
   };
 
   const shareMovie = () => {
-    window.location.href = "/share";
+    navigate("/share");
   };
 
   return (

@@ -20,9 +20,7 @@ export class VideoRepository extends Repository<VideoEntity> {
         take: limit,
         skip: (page - 1) * limit,
       }),
-      this.count({
-        where: { sharedById: userId },
-      }),
+      this.count({}),
     ]);
 
     return {
