@@ -96,12 +96,12 @@ export default function MovieCard({
       {/* Content Section */}
       <div className="flex-1 space-y-4">
         <div className="flex items-start justify-between">
-          <div>
-            <div>
-              <h3 className={`text-lg font-medium text-red-500`}>{title}</h3>
-            </div>
+          <div className="flex items-start flex-col">
+            <span className="text-lg font-medium text-red-500 text-left">
+              {title}
+            </span>
             <p className="text-sm text-muted-foreground">
-              Shared by: {sharedBy}
+              <span className="font-bold">Shared by:</span> {sharedBy}
             </p>
             <div className="flex items-center gap-4 mt-1">
               <span className="text-sm">
@@ -142,10 +142,10 @@ export default function MovieCard({
           </div>
         </div>
 
-        <div>
-          <h4 className="text-sm font-medium mb-2">Description:</h4>
+        <div className="flex flex-col items-start">
+          <h4 className="text-sm mb-2 font-bold">Description:</h4>
           <p
-            className={`text-sm text-muted-foreground ${!isDescriptionExpanded ? "line-clamp-2" : ""}`}
+            className={`text-sm text-muted-foreground text-left ${!isDescriptionExpanded ? "line-clamp-2" : ""}`}
           >
             {description}
           </p>

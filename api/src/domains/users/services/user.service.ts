@@ -10,8 +10,11 @@ export class UserService {
   }
 
   public async findUserByEmail(email: string) {
-    return this.userRepository.findOneBy({
-      email,
+    return this.userRepository.findOne({
+      where: {
+        email,
+      },
+      select: ['id', 'email', 'password', 'createdAt', 'updatedAt'],
     });
   }
   public async findById(id: string) {
