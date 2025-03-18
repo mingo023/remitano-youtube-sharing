@@ -7,6 +7,7 @@ import { UserModule } from './domains/users/user.module';
 import { AuthModule } from './domains/auth/auth.module';
 import { VideoModule } from '~domains/videos/video.module';
 import { SocketModule } from '~sockets/socket.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -15,6 +16,14 @@ import { SocketModule } from '~sockets/socket.module';
     AuthModule,
     VideoModule,
     SocketModule,
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 10,
+        },
+      ],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
